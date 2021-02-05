@@ -22,15 +22,15 @@ export function build(
   } = {}
 ) {
   debug(`cloning ${cloneUrl} into ${directory} ...`)
-  execSync(directory, `git clone ${cloneUrl} .`)
+  execSync(directory, ['git', 'clone', cloneUrl, '.'])
   debug(`(ok)`)
   const pkgs = path.resolve(directory, packagesDirectory)
   debug(`setting commit user ...`)
-  execSync(directory, `git config user.name "${userName}"`)
-  execSync(directory, `git config user.email "${userEmail}"`)
+  execSync(directory, ['git', 'config', 'user.name', userName])
+  execSync(directory, ['git', 'config', 'user.email', userEmail])
   debug(`(ok)`)
   debug(`checking out ${sha} ...`)
-  execSync(directory, `git reset --hard ${sha}`)
+  execSync(directory, ['git', 'reset', '--hard', sha])
   debug(`(ok)`)
 
   debug(`getting packages ...`)
@@ -58,8 +58,8 @@ export function build(
   debug('(ok)')
 
   debug(`committing changes ...`)
-  execSync(directory, 'git add -A')
-  execSync(directory, 'git commit -m "chore: alias packages"')
+  execSync(directory, ['git', 'add', '-A'])
+  execSync(directory, ['git', 'commit', '-m', 'chore: alias packages'])
   debug('(ok)')
 
   return getPackages(pkgs)
